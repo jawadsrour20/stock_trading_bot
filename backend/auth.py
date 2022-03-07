@@ -1,3 +1,7 @@
+# Server knows who is logged in through the JWT token
+# It decodes the token, and now knows the username (which is unique for every user),
+# Accordingly, it can manage that users information.
+
 # pip install PyJWT ... not JWT
 import jwt
 from fastapi import HTTPException, Security
