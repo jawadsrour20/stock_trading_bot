@@ -3,6 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from typing import Optional
+from Stock_Market import Yfinance_Data_Fetcher
+from Stock_Market.time_utils import Period, Interval
+from bot import BotImplementation1
 
 from cors import *
 from http_status_codes import *
@@ -67,3 +70,10 @@ def login(username: str = Body(...), password: str = Body(...), db: Session = De
 @app.get("/protected_route")
 def protected_route(username=Depends(crud.auth_handler.auth_wrapper)):
     return {"username": username}
+
+
+# TODO Remove it later on, just added it as an example 
+@app.get("/example")
+def get_recommendation_example():
+    data = Yfinance_Data_Fetcher.get_history_by_period("AAPL", Period.ONE_MONTH, Interval.ONE_WEEK)
+    return BotImplementation1.get_decision(market_data=data)
