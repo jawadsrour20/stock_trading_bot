@@ -1,5 +1,5 @@
 import yfinance as yf
-from time_utils import Interval, Period
+from .time_utils import Interval, Period
 
 class Yfinance_Data_Fetcher(object):
 
