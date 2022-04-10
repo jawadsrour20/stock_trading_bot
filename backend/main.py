@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from typing import Optional
 from Stock_Market import Yfinance_Data_Fetcher
 from Stock_Market.time_utils import Period, Interval
-from bot import BotImplementation1
+from bot import BotImplementation1, BotImplementation2, BotImplementation3, BotImplementation4, BotImplementation5
 
 from cors import *
 from http_status_codes import *
@@ -71,9 +71,34 @@ def login(username: str = Body(...), password: str = Body(...), db: Session = De
 def protected_route(username=Depends(crud.auth_handler.auth_wrapper)):
     return {"username": username}
 
-
+'''
+Example Endpoints to test the bot implementations
+'''
 # TODO Remove it later on, just added it as an example 
-@app.get("/example")
+@app.get("/example1")
 def get_recommendation_example():
     data = Yfinance_Data_Fetcher.get_history_by_period("AAPL", Period.ONE_MONTH, Interval.ONE_WEEK)
     return BotImplementation1.get_decision(market_data=data)
+
+@app.get("/example2")
+def get_recommendation_example2():
+    data = Yfinance_Data_Fetcher.get_history_between_two_dates("AAPL", "2022-01-01", "2022-03-11", Interval.ONE_DAY )
+    print(data)
+    return BotImplementation2.get_decision(market_data=data)
+
+@app.get("/example3")
+def get_recommendation_example3():
+    data = Yfinance_Data_Fetcher.get_history_by_period("AAPL", Period.ONE_MONTH, Interval.ONE_WEEK)
+    return BotImplementation3.get_decision(market_data=data)
+
+@app.get("/example4")
+def get_recommendation_example2():
+    data = Yfinance_Data_Fetcher.get_history_between_two_dates("AAPL", "2022-01-01", "2022-03-11", Interval.ONE_DAY )
+    print(data)
+    return BotImplementation4.get_decision(market_data=data)
+
+@app.get("/example5")
+def get_recommendation_example2():
+    data = Yfinance_Data_Fetcher.get_history_between_two_dates("AAPL", "2022-01-01", "2022-03-11", Interval.ONE_DAY )
+    print(data)
+    return BotImplementation5.get_decision(market_data=data)
