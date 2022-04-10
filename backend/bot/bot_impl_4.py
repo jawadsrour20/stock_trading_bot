@@ -29,16 +29,12 @@ class BotImplementation4(BotInterface):
         if (close_list_trend < 0) and (((close_list[-1] - close_list[-2]) / close_list[-2]) >= 0.5):
             return "buy"
         
-        else:
-            return "none"
-
-    '''
-        if the slope is a +ve value --> increasing trend
-
-        if the slope is a -ve value --> decreasing trend
-
-        if the slope is a zero value --> No trend
-    '''
+        #if the next candlesticks reach 1.2 the original value we sell
+        #if value is below 0.75x(the old value) sell to minimize loss 
+        elif (close_list[-1] > 1.2 * close_list[-2]) or (close_list[-1] <= 0.75 * close_list[-2]):
+            return "sell" 
+        
+        return "none"
 
 if __name__=="__main__":
     print("Hello From The Fourth Implementation")

@@ -32,7 +32,10 @@ class BotImplementation5(BotInterface):
                open_list[-3] <= open_list[-2] <= close_list[-3] and\
                open_list[-2] <= open_list[-1] <= close_list[-2]:
                 return "buy"
-
+            #if the next candlesticks reach 1.2 the original value we sell
+            #if value is below 0.75x(the old value) sell to minimize loss 
+            elif (close_list[-1] > 1.2 * close_list[-2]) or (close_list[-1] <= 0.75 * close_list[-2]):
+                return "sell" 
         return "none"
 
 if __name__=="__main__":

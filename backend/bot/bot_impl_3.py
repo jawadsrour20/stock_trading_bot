@@ -15,17 +15,10 @@ class BotImplementation3(BotInterface):
 
     @staticmethod
     def get_decision(market_data):
-        pos_held = False
-
-        
-        market_data['min_24'] = market_data.close.rolling(60*24).min()
-        market_data['max_24'] = market_data.close.rolling(60*24).max()
-        
-    
-        
-    
+        market_data['min_24'] = market_data.Close.rolling(60*24).min()
+        market_data['max_24'] = market_data.Close.rolling(60*24).max()     
       
-        if ((market_data.close <= market_data.min_24) &(market_data.close > market_data.close.shift(60*24*30)*1.03))*1 and not pos_held: # If MA is more than 10cents under price, and we haven't already bought
+        if ((market_data.Close[-1] <= market_data.min_24[-1]) and (market_data.Close[-1] > market_data.Close.shift(60*24*30)[-1]*1.03))*1: # If MA is more than 10cents under price, and we haven't already bought
             return("Buy")
             # here put the api call this is a real one from alpaca_trade_api
             # api.submit_order(
@@ -35,8 +28,7 @@ class BotImplementation3(BotInterface):
             #     type='market',
             #     time_in_force='gtc'
             # )
-            pos_held = True
-        elif ((market_data.close >= market_data.min_24) &(market_data.close < market_data.close.shift(60*24*30)*1.03))*1 and pos_held: # If MA is more than 10cents above price, and we already bought
+        elif ((market_data.Close[-1] >= market_data.min_24[-1]) &(market_data.Close[-1] < market_data.Close.shift(60*24*30)[-1]*1.03))*1: # If MA is more than 10cents above price, and we already bought
             return("Sell")
             # api.submit_order(
             #     symbol=symb,
@@ -45,8 +37,8 @@ class BotImplementation3(BotInterface):
             #     type='market',
             #     time_in_force='gtc'
             # )
-            pos_held = False
-
+        else:
+            return "none"
 '''
 trial = Yfinance_Data_Fetcher.get_history_between_two_dates("AAPL", "2022-01-01", "2022-03-11", Interval.ONE_DAY )
 BotImplementation3.get_decision(trial)

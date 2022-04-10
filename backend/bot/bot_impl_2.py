@@ -21,10 +21,6 @@ class BotImplementation2(BotInterface):
 
     @staticmethod
     def get_decision(market_data):
-        pos_held = False
-
-        
-        
     
         # 5-days high
         market_data['high'] = market_data.Close.shift(1).rolling(window=5).max()
@@ -32,9 +28,9 @@ class BotImplementation2(BotInterface):
         market_data['low'] = market_data.Close.shift(1).rolling(window=5).min()
         # 5-days mean
         market_data['avg'] = market_data.Close.shift(1).rolling(window=5).mean()
-    
-        
-        if market_data.Close > market_data.high and not pos_held: # If MA is more than 10cents under price, and we haven't already bought
+
+
+        if market_data.Close[-1] > market_data.high[-1]: # If MA is more than 10cents under price, and we haven't already bought
             return("Buy")
             # here put the api call this is a real one from alpaca_trade_api
             # api.submit_order(
@@ -44,8 +40,7 @@ class BotImplementation2(BotInterface):
             #     type='market',
             #     time_in_force='gtc'
             # )
-            pos_held = True
-        elif market_data.Close < market_data.avg and pos_held: # If MA is more than 10cents above price, and we already bought
+        elif market_data.Close[-1] < market_data.avg[-1]: # If MA is more than 10cents above price, and we already bought
             return("Sell")
             # api.submit_order(
             #     symbol=symb,
@@ -54,7 +49,6 @@ class BotImplementation2(BotInterface):
             #     type='market',
             #     time_in_force='gtc'
             # )
-            pos_held = False
 
 '''
 trial = Yfinance_Data_Fetcher.get_history_between_two_dates("AAPL", "2022-01-01", "2022-03-11", Interval.ONE_DAY )
