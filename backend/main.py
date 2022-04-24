@@ -33,7 +33,8 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    # allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -74,10 +75,19 @@ def protected_route(username=Depends(crud.auth_handler.auth_wrapper)):
 '''
 Example Endpoints to test the bot implementations
 '''
-# TODO Remove it later on, just added it as an example 
+# TODO Remove it later on, just added it as an example
 @app.get("/example1")
 def get_recommendation_example():
+    
     data = Yfinance_Data_Fetcher.get_history_by_period("AAPL", Period.ONE_MONTH, Interval.ONE_WEEK)
+   
+    # draw plot
+    
+    # store as png on server-side
+
+    # return png to user
+    
+    # FileResponse(...)
     return BotImplementation1.get_decision(market_data=data)
 
 @app.get("/example2")

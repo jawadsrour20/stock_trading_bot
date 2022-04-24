@@ -8,7 +8,7 @@
 
 from pydantic import BaseModel
 from typing import Optional
-
+import datetime
 
 # UserBase Pydantic model (or let's say "schema") to have common attributes while creating or reading data.
 class UserBase(BaseModel):
@@ -32,5 +32,37 @@ class User(UserBase):
     id: int # after the user is created, we know user id
 
     # in the Pydantic models for reading, add an internal Config class; used to provide configurations to Pydantic
+    class Config:
+        orm_mode = True
+
+
+class TransactionBase(BaseModel):
+    user_id: int
+    amount: float
+    did_buy: bool
+    timestamp: datetime.datetime
+    stock_name: str
+
+class TransactionCreate(TransactionBase):
+    pass
+
+class Transaction(TransactionBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+class StockBase(BaseModel):
+
+    user_id: int 
+    stock_name: str
+    amount: float = 0.0
+
+class StockCreate(StockBase):
+    pass
+
+class Stock(StockBase):
+    id: int
+
     class Config:
         orm_mode = True
