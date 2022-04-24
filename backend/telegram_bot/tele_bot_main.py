@@ -1,9 +1,13 @@
+import json
 import os
 import telebot
+import requests
 
 from dotenv import load_dotenv
 
 load_dotenv()
+
+URL = "http://localhost:8000/"
 
 API_KEY = os.getenv("API_KEY_TELEGRAM")
 bot = telebot.TeleBot(API_KEY)
@@ -28,8 +32,10 @@ def stock_info(message):
 @bot.message_handler(func=stock_info)
 def send_info(message):
   request = message.text.split()[1]
-  #use data fetchers file to get info on specific stock
-  
+  r = requests.post(url = URL + "tickerInfo", json=str(request))
+  data = r.json()
+  for k, v in data["info"].items():
+    bot.send_message(message.chat.id, str(k) + " : " + str(v))
 
 #Keep the bot looking for new messages
 bot.polling()

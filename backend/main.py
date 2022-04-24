@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, Depends, Body
 from fastapi.middleware.cors import CORSMiddleware
+from requests import request
 from sqlalchemy.orm import Session
 
 from typing import Optional
@@ -114,4 +115,12 @@ def recommender_bot5(ticker: str = Body(...), start_date: str = Body(...), end_d
     print(data)
     return {
         "decision": BotImplementation5.get_decision(market_data=data)
+    }
+
+@app.post("/tickerInfo", status_code=HTTP_STATUS_CODE_OK)
+def ticker_info(ticker: str = Body(...)):
+    data = Yfinance_Data_Fetcher.get_stock_info(ticker)
+    #print(data)
+    return {
+        "info" : data
     }
