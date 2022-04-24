@@ -68,47 +68,50 @@ def login(username: str = Body(...), password: str = Body(...), db: Session = De
     return {"token": JWT}
 
 
-@app.get("/protected_route")
-def protected_route(username=Depends(crud.auth_handler.auth_wrapper)):
+@app.get("/home")
+def home(username=Depends(crud.auth_handler.auth_wrapper)):
     return {"username": username}
 
-'''
-Example Endpoints to test the bot implementations
-'''
-# TODO Remove it later on, just added it as an example
-@app.get("/example1")
-def get_recommendation_example():
-    
-    data = Yfinance_Data_Fetcher.get_history_by_period("AAPL", Period.ONE_MONTH, Interval.ONE_WEEK)
-   
-    # draw plot
-    
-    # store as png on server-side
 
-    # return png to user
-    
-    # FileResponse(...)
-    return BotImplementation1.get_decision(market_data=data)
+@app.post("/bot1",  status_code=HTTP_STATUS_CODE_CREATED)
+def recommender_bot1(ticker: str = Body(...), period: str = Body(...), interval: str = Body(...)):
 
-@app.get("/example2")
-def get_recommendation_example2():
-    data = Yfinance_Data_Fetcher.get_history_between_two_dates("AAPL", "2022-01-01", "2022-03-11", Interval.ONE_DAY )
+    data = Yfinance_Data_Fetcher.get_history_by_period(ticker, period, interval)
+
     print(data)
-    return BotImplementation2.get_decision(market_data=data)
+    return {
+        "decision": BotImplementation1.get_decision(market_data=data)
+    }
 
-@app.get("/example3")
-def get_recommendation_example3():
-    data = Yfinance_Data_Fetcher.get_history_by_period("AAPL", Period.ONE_MONTH, Interval.ONE_WEEK)
-    return BotImplementation3.get_decision(market_data=data)
 
-@app.get("/example4")
-def get_recommendation_example2():
-    data = Yfinance_Data_Fetcher.get_history_between_two_dates("AAPL", "2022-01-01", "2022-03-11", Interval.ONE_DAY )
+@app.post("/bot2", status_code=HTTP_STATUS_CODE_OK)
+def recommender_bot2(ticker: str = Body(...), start_date: str = Body(...), end_date: str = Body(...), interval: str = Body(...)):
+    data = Yfinance_Data_Fetcher.get_history_between_two_dates(ticker, start_date, end_date, interval)
     print(data)
-    return BotImplementation4.get_decision(market_data=data)
+    return {
+        "decision": BotImplementation2.get_decision(market_data=data)
+    }
 
-@app.get("/example5")
-def get_recommendation_example2():
-    data = Yfinance_Data_Fetcher.get_history_between_two_dates("AAPL", "2022-01-01", "2022-03-11", Interval.ONE_DAY )
+@app.post("/bot3", status_code=HTTP_STATUS_CODE_OK)
+def recomender_bot3(ticker: str = Body(...), period: str = Body(...), interval: str = Body(...)):
+    data = Yfinance_Data_Fetcher.get_history_by_period(ticker, period, interval)
     print(data)
-    return BotImplementation5.get_decision(market_data=data)
+    return {
+        "decision": BotImplementation3.get_decision(market_data=data)
+    }
+
+@app.post("/bot4", status_code=HTTP_STATUS_CODE_OK)
+def recommender_bot4(ticker: str = Body(...), start_date: str = Body(...), end_date: str = Body(...), interval: str = Body(...)):
+    data = Yfinance_Data_Fetcher.get_history_between_two_dates(ticker, start_date, end_date, interval)
+    print(data)
+    return {
+        "decision": BotImplementation4.get_decision(market_data=data)
+    }
+
+@app.post("/bot5", status_code=HTTP_STATUS_CODE_OK)
+def recommender_bot5(ticker: str = Body(...), start_date: str = Body(...), end_date: str = Body(...), interval: str = Body(...)):
+    data = Yfinance_Data_Fetcher.get_history_between_two_dates(ticker, start_date, end_date, interval)
+    print(data)
+    return {
+        "decision": BotImplementation5.get_decision(market_data=data)
+    }

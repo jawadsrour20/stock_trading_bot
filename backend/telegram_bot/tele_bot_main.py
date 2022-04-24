@@ -1,9 +1,10 @@
 import os
 import telebot
 
-from dotenv import dotenv_values, load_dotenv
+from dotenv import load_dotenv
 
 load_dotenv()
+
 API_KEY = os.getenv("API_KEY_TELEGRAM")
 bot = telebot.TeleBot(API_KEY)
 
