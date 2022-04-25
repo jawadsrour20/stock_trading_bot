@@ -36,7 +36,7 @@ class BotImplementation5(BotInterface):
             #if value is below 0.75x(the old value) sell to minimize loss 
             elif (close_list[-1] > 1.2 * close_list[-2]) or (close_list[-1] <= 0.75 * close_list[-2]):
                 return "sell" 
-        return "none"
+        return "Buy/Sell"
 
 if __name__=="__main__":
     print("Hello From The Fifth Implementation")

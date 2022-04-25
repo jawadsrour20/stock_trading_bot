@@ -34,7 +34,7 @@ class BotImplementation4(BotInterface):
         elif (close_list[-1] > 1.2 * close_list[-2]) or (close_list[-1] <= 0.75 * close_list[-2]):
             return "sell" 
         
-        return "none"
+        return "Buy/Sell"
 
 if __name__=="__main__":
     print("Hello From The Fourth Implementation")

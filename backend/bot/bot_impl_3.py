@@ -38,7 +38,7 @@ class BotImplementation3(BotInterface):
             #     time_in_force='gtc'
             # )
         else:
-            return "none"
+            return "Buy/Sell"
 '''
 trial = Yfinance_Data_Fetcher.get_history_between_two_dates("AAPL", "2022-01-01", "2022-03-11", Interval.ONE_DAY )
 BotImplementation3.get_decision(trial)

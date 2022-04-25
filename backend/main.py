@@ -86,8 +86,8 @@ def recommender_bot1(ticker: str = Body(...), period: str = Body(...), interval:
 
 
 @app.post("/bot2", status_code=HTTP_STATUS_CODE_OK)
-def recommender_bot2(ticker: str = Body(...), start_date: str = Body(...), end_date: str = Body(...), interval: str = Body(...)):
-    data = Yfinance_Data_Fetcher.get_history_between_two_dates(ticker, start_date, end_date, interval)
+def recommender_bot2(ticker: str = Body(...), period: str = Body(...), interval: str = Body(...)):
+    data = Yfinance_Data_Fetcher.get_history_by_period(ticker, period, interval)
     print(data)
     return {
         "decision": BotImplementation2.get_decision(market_data=data)
@@ -102,16 +102,16 @@ def recomender_bot3(ticker: str = Body(...), period: str = Body(...), interval: 
     }
 
 @app.post("/bot4", status_code=HTTP_STATUS_CODE_OK)
-def recommender_bot4(ticker: str = Body(...), start_date: str = Body(...), end_date: str = Body(...), interval: str = Body(...)):
-    data = Yfinance_Data_Fetcher.get_history_between_two_dates(ticker, start_date, end_date, interval)
+def recommender_bot4(ticker: str = Body(...), period: str = Body(...), interval: str = Body(...)):
+    data = Yfinance_Data_Fetcher.get_history_by_period(ticker, period, interval)
     print(data)
     return {
         "decision": BotImplementation4.get_decision(market_data=data)
     }
 
 @app.post("/bot5", status_code=HTTP_STATUS_CODE_OK)
-def recommender_bot5(ticker: str = Body(...), start_date: str = Body(...), end_date: str = Body(...), interval: str = Body(...)):
-    data = Yfinance_Data_Fetcher.get_history_between_two_dates(ticker, start_date, end_date, interval)
+def recommender_bot5(ticker: str = Body(...), period: str = Body(...), interval: str = Body(...)):
+    data = Yfinance_Data_Fetcher.get_history_by_period(ticker, period, interval)
     print(data)
     return {
         "decision": BotImplementation5.get_decision(market_data=data)
