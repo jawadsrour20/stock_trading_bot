@@ -29,6 +29,10 @@ def stock_info(message):
   else:
     return True
 
+@bot.message_handler(commands=['start', 'help'])
+def greet(message):
+  bot.reply_to(message, "Welcome To Stock Trading Bot!\n=====\nCommand List:\n=====\n/Greet, /hello: Get greeted by our bot.\n=====\n/help, /start: get information about our bot and the commands supported by it.\n=====\nstock_info {ticker_symbol}: Get information on a specific stock.\n=====\nbot1 {ticker_symbol} {period} {interval}: Activates our Stock Analysis Bot 1 on a specific stock. Period can be one of the following: 1d,5d,1mo,3mo,6mo,1y,2y,5y,10y,ytd,max. Interval can be one of the following: 1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo.\n=====\nbot2 {ticker_symbol} {period} {interval}.\n=====\nbot3 {ticker_symbol} {period} {interval}\n=====\nbot4 {ticker_symbol} {period} {interval}.\n=====\nbot5 {ticker_symbol} {period} {interval}")
+
 @bot.message_handler(func=stock_info)
 def send_info(message):
   if len(message.text.split()) > 2:
