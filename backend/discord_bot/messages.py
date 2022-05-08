@@ -1,13 +1,13 @@
 from enum import Enum
 
-class DiscordMessage(Enum):
+class eDiscordMessage(Enum):
 
     HELLO = 0
     BYE = 1
 
 
 discord_messages = {
-    DiscordMessage.HELLO: "hello",
-    DiscordMessage.BYE: "bye",
+    eDiscordMessage.HELLO: "hello",
+    eDiscordMessage.BYE: "bye",
 }
 
